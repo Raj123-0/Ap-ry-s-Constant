@@ -1,12 +1,39 @@
-import sys
+from __future__ import annotations
+"""Module for mathematical computation and analysis."""
+
+
+import functools
 import math
 import multiprocessing as mp
+import sys
+
 
 def compute_chunk_bs(args):
+    """Compute chunk bs using optimized algorithms.
+    
+    Args:
+        args:
+    
+    Returns:
+        The computed result
+    
+    """
     start, end = args
     return binary_split_range(start, end)
 
-def binary_split_range(a, b):
+
+@functools.lru_cache(maxsize=None)
+def binary_split_range(a, b) -> tuple:
+    """Binary split range.
+    
+    Args:
+        a:
+        b:
+    
+    Returns:
+        tuple: Result of type tuple
+    
+    """
     if a == b:
         if a == 1:
             P = 1
@@ -26,7 +53,11 @@ def binary_split_range(a, b):
     T = T1 * Q2 + P1 * T2
     return P, Q, T
 
+
 def main():
+    """Entry point — parse arguments and run the main computation.
+    
+    """
     if len(sys.argv) > 1:
         try:
             N = int(sys.argv[1])
@@ -84,7 +115,8 @@ def main():
             results = pool.map(compute_chunk_bs, chunks)
             
         P_total, Q_total, T_total = results[0]
-        for P, Q, T in results[1:]:
+        for P, Q, T in results[1:
+            ]:
             T_total = T_total * Q + P_total * T
             P_total = P_total * P
             Q_total = Q_total * Q
